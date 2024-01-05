@@ -10,9 +10,12 @@ import { TVShowDetails } from "./components/TVShowDetails/TVShowDetails.jsx";
 
 import { Logo } from "./components/Logo/Logo.jsx";
 import logo from "./assets/images/logo.png";
+import { TVShowListItem } from "./components/TVShowListItem/TVShowListItem.jsx";
+import { TVShowList } from "./components/TVShowList/TVShowList.jsx";
 
 export function App() {
   const [currentTVShow, seCurrentTVShow] = useState();
+  const [recommendationList, setRecommendationList] = useState([]);
 
   //
   async function fetchPopulars() {
@@ -24,16 +27,33 @@ export function App() {
     }
   }
 
+  async function fetchRecommendations(tvShowId) {
+    const recommendations = await TVShowAPI.fetchRecommendations(tvShowId);
+    if (recommendations.length > 0) {
+      setRecommendationList(recommendations.slice(0, 10));
+    }
+  }
+
   // executer APRES premier render
   useEffect(() => {
     fetchPopulars();
   }, []);
 
+  useEffect(() => {
+    if (currentTVShow) {
+      fetchRecommendations(currentTVShow.id);
+    }
+  }, [currentTVShow]);
+
+  /*
   console.log("currentTVShow", currentTVShow);
 
   currentTVShow
     ? console.log("imgUrl", BACKDROP_BASE_URL + currentTVShow.backdrop_path)
     : console.log("");
+*/
+
+  console.log("recommendationList", recommendationList);
 
   return (
     <div
@@ -61,7 +81,14 @@ export function App() {
       <div className={s.tv_show_details}>
         {currentTVShow && <TVShowDetails tvShow={currentTVShow} />}
       </div>
-      <div className={s.recommendations}>Recommendations</div>
+      <div className={s.recommendations}>
+        {recommendationList && recommendationList.length > 0 && (
+          <TVShowList
+            recommendationList={recommendationList}
+            onClickItem={seCurrentTVShow}
+          />
+        )}
+      </div>
     </div>
   );
 }
