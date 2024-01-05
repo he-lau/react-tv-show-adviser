@@ -8,6 +8,9 @@ import { BACKDROP_BASE_URL } from "./config.js";
 
 import { TVShowDetails } from "./components/TVShowDetails/TVShowDetails.jsx";
 
+import { Logo } from "./components/Logo/Logo.jsx";
+import logo from "./assets/images/logo.png";
+
 export function App() {
   const [currentTVShow, seCurrentTVShow] = useState();
 
@@ -44,8 +47,11 @@ export function App() {
       <div className={s.header}>
         <div className="row">
           <div className="col-4">
-            <div>Logo</div>
-            <div>Subtitle</div>
+            <Logo
+              image={logo}
+              title={"Watowatch"}
+              subTitle={"Find a show you may like"}
+            />
           </div>
           <div className="col-12 col-sm-12 col-md-4 col-lg-4">
             <input style={{ width: "100%" }} type="text" />
