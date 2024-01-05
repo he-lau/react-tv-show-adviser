@@ -2,12 +2,43 @@ import "./global.css";
 import s from "./style.module.css";
 
 import { TVShowAPI } from "./api/tv-show.js";
-
-TVShowAPI.fetchPopulars();
+import { useEffect } from "react";
+import { useState } from "react";
+import { BACKDROP_BASE_URL } from "./config.js";
 
 export function App() {
+  const [currentTVShow, seCurrentTVShow] = useState();
+
+  //
+  async function fetchPopulars() {
+    const populars = await TVShowAPI.fetchPopulars();
+
+    // série la plus populaire
+    if (populars.length > 0) {
+      seCurrentTVShow(populars[0]);
+    }
+  }
+
+  // executer APRES premier render
+  useEffect(() => {
+    fetchPopulars();
+  }, []);
+
+  console.log("currentTVShow", currentTVShow);
+
+  currentTVShow
+    ? console.log("imgUrl", BACKDROP_BASE_URL + currentTVShow.backdrop_path)
+    : console.log("");
+
   return (
-    <div className={s.main_container}>
+    <div
+      className={s.main_container}
+      style={{
+        background: currentTVShow
+          ? `linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url("${BACKDROP_BASE_URL}${currentTVShow.backdrop_path}") no-repeat center /cover`
+          : "black",
+      }}
+    >
       <div className={s.header}>
         <div className="row">
           <div className="col-4">
