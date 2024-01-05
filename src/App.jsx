@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { BACKDROP_BASE_URL } from "./config.js";
 
+import { TVShowDetails } from "./components/TVShowDetails/TVShowDetails.jsx";
+
 export function App() {
   const [currentTVShow, seCurrentTVShow] = useState();
 
@@ -50,7 +52,9 @@ export function App() {
           </div>
         </div>
       </div>
-      <div className={s.tv_show_details}>Details</div>
+      <div className={s.tv_show_details}>
+        {currentTVShow && <TVShowDetails tvShow={currentTVShow} />}
+      </div>
       <div className={s.recommendations}>Recommendations</div>
     </div>
   );
