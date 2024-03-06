@@ -56,9 +56,6 @@ export function App() {
 
   console.log("recommendationList", recommendationList);
 
-  console.log(process.env.API_KEY);
-  console.log(process.env.BASE_URL);
-
   async function searchTVShow(tvShowName) {
     const searchResponse = await TVShowAPI.fetchByTitle(tvShowName);
 
