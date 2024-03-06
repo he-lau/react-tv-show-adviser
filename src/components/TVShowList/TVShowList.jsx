@@ -8,8 +8,9 @@ export function TVShowList({ recommendationList, onClickItem }) {
     <div>
       <div className={s.title}>You may also like : </div>
       <div className={s.list}>
+        {/* retourne la liste*/}
         {recommendationList.map((tvShow) => (
-          <span className={s.tv_show_list_item}>
+          <span key={tvShow.id} className={s.tv_show_list_item}>
             <TVShowListItem
               key={tvShow.id}
               tvShow={tvShow}

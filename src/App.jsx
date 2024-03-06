@@ -12,6 +12,7 @@ import { Logo } from "./components/Logo/Logo.jsx";
 import logo from "./assets/images/logo.png";
 import { TVShowListItem } from "./components/TVShowListItem/TVShowListItem.jsx";
 import { TVShowList } from "./components/TVShowList/TVShowList.jsx";
+import { SearchBar } from "./components/SearchBar/SearchBar.jsx";
 
 export function App() {
   const [currentTVShow, seCurrentTVShow] = useState();
@@ -55,6 +56,16 @@ export function App() {
 
   console.log("recommendationList", recommendationList);
 
+  async function searchTVShow(tvShowName) {
+    const searchResponse = await TVShowAPI.fetchByTitle(tvShowName);
+
+    console.log("searchResponse", searchResponse);
+
+    if (searchResponse.length > 0) {
+      seCurrentTVShow(searchResponse[0]);
+    }
+  }
+
   return (
     <div
       className={s.main_container}
@@ -74,7 +85,7 @@ export function App() {
             />
           </div>
           <div className="col-12 col-sm-12 col-md-4 col-lg-4">
-            <input style={{ width: "100%" }} type="text" />
+            <SearchBar onSubmit={searchTVShow} />
           </div>
         </div>
       </div>
