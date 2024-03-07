@@ -7,7 +7,7 @@ export function SearchBar({ onSubmit }) {
 
     //
     if (e.key === "Enter" && targetValue !== "") {
-      console.log("Submit targetValue", targetValue);
+      //console.log("Submit targetValue", targetValue);
       onSubmit(targetValue);
     }
   }
